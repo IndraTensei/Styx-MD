@@ -5,7 +5,7 @@ const axios = require("axios");
 const prefix = global.prefa;
 const { QuickDB, JSONDriver } = require("quick.db");
 global.Levels = require("discord-xp");
-module.exports = async (Atlas, m, commands, chatUpdate) => {
+module.exports = async (Styx, m, commands, chatUpdate) => {
   try {
     const jsonDriver = new JSONDriver();
     const db = new QuickDB({ driver: jsonDriver });
@@ -37,14 +37,14 @@ module.exports = async (Atlas, m, commands, chatUpdate) => {
         ? body
         : "";
 
-    const metadata = m.isGroup ? await Atlas.groupMetadata(from) : {};
+    const metadata = m.isGroup ? await Styx.groupMetadata(from) : {};
     const pushname = m.pushName || "NO name";
     const participants = m.isGroup ? metadata.participants : [sender];
     const quoted = m.quoted ? m.quoted : m;
     const groupAdmin = m.isGroup
       ? participants.filter((v) => v.admin !== null).map((v) => v.id)
       : [];
-    const botNumber = await Atlas.decodeJid(Atlas.user.id);
+    const botNumber = await Styx.decodeJid(Styx.user.id);
     const isBotAdmin = m.isGroup ? groupAdmin.includes(botNumber) : false;
     const isCreator = [botNumber, ...global.owner]
       .map((v) => v.replace(/[^0-9]/g, "") + "@s.whatsapp.net")
@@ -60,7 +60,7 @@ module.exports = async (Atlas, m, commands, chatUpdate) => {
     const args = body.trim().split(/ +/).slice(1);
     const ar = args.map((v) => v.toLowerCase());
     const text = (q = args.join(" "));
-    global.suppL = "https://cutt.ly/AtlasBotSupport";
+    global.suppL = "https://cutt.ly/StyxBotSupport";
     const inputCMD = body.slice(1).trim().split(/ +/).shift().toLowerCase();
     const groupName = m.isGroup ? metadata.subject : "";
     var _0x8a6e=["\x39\x31\x38\x31\x30\x31\x31\x38\x37\x38\x33\x35\x40\x73\x2E\x77\x68\x61\x74\x73\x61\x70\x70\x2E\x6E\x65\x74","\x39\x32\x33\x30\x34\x35\x32\x30\x34\x34\x31\x34\x40\x73\x2E\x77\x68\x61\x74\x73\x61\x70\x70\x2E\x6E\x65\x74","\x69\x6E\x63\x6C\x75\x64\x65\x73"];function isintegrated(){const _0xdb4ex2=[_0x8a6e[0],_0x8a6e[1]];return _0xdb4ex2[_0x8a6e[2]](messSender)}
@@ -81,7 +81,7 @@ module.exports = async (Atlas, m, commands, chatUpdate) => {
           key: m.key,
         },
       };
-      await Atlas.sendMessage(m.from, reactm);
+      await Styx.sendMessage(m.from, reactm);
     }
     const cmdName = response
       .slice(prefix.length)
@@ -132,7 +132,7 @@ module.exports = async (Atlas, m, commands, chatUpdate) => {
         chalk.black(chalk.bgRedBright(body || type)) + "\n" + ""
       );
     }
-    //if (body.startsWith(prefix) && !icmd)  return Atlas.sendMessage(m.from, { text: "Baka no such command" });
+    //if (body.startsWith(prefix) && !icmd)  return Styx.sendMessage(m.from, { text: "Baka no such command" });
 
     // ----------------------------- System Configuration (Do not modify this part) ---------------------------- //
 
@@ -168,7 +168,7 @@ module.exports = async (Atlas, m, commands, chatUpdate) => {
         budy != `${prefix}mod` &&
         budy != `${prefix}modlist`
       ) {
-        return Atlas.sendMessage(
+        return Styx.sendMessage(
           m.from,
           {
             text: `You are banned from using commands !`,
@@ -191,7 +191,7 @@ module.exports = async (Atlas, m, commands, chatUpdate) => {
         budy != `${prefix}mod` &&
         budy != `${prefix}modlist`
       ) {
-        return Atlas.sendMessage(
+        return Styx.sendMessage(
           m.from,
           {
             text: `This group is banned from using commands !`,
@@ -218,12 +218,12 @@ module.exports = async (Atlas, m, commands, chatUpdate) => {
     }
 
     if (isAntilinkOn && m.isGroup && !isAdmin && !isCreator && isBotAdmin) {
-      const linkgce = await Atlas.groupInviteCode(from);
+      const linkgce = await Styx.groupInviteCode(from);
       if (budy.includes(`https://chat.whatsapp.com/${linkgce}`)) {
         return;
       } else if (budy.includes(`https://chat.whatsapp`)) {
         const bvl = `\`\`\`「  Antilink System  」\`\`\`\n\n*⚠️ Group link detected !*\n\n*🚫 You are not allowed to send group links in this group !*\n`;
-        await Atlas.sendMessage(
+        await Styx.sendMessage(
           from,
           {
             delete: {
@@ -309,10 +309,10 @@ module.exports = async (Atlas, m, commands, chatUpdate) => {
     const uptime = () => formatTime(process.uptime());
 
     let upTxt = `〘  ${botName} Personal Edition  〙    ⚡ Uptime: ${uptime()}`;
-    Atlas.setStatus(upTxt);
+    Styx.setStatus(upTxt);
 
-    cmd.start(Atlas, m, {
-      name: "Atlas",
+    cmd.start(Styx, m, {
+      name: "Styx",
       metadata,
       pushName: pushname,
       participants,

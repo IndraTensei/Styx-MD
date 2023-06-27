@@ -31,7 +31,7 @@ module.exports = {
     "github",
   ],
   description: "All picture related commands",
-  start: async (Atlas, m, { inputCMD, text, doReact, prefix, pushName }) => {
+  start: async (Styx, m, { inputCMD, text, doReact, prefix, pushName }) => {
     switch (inputCMD) {
       case "google":
       case "search":
@@ -52,7 +52,7 @@ module.exports = {
             googleSearch[num].snippet
           }*\n\n_🔷 Link:_ *${googleSearch[num].link}*\n\n\n`;
         }
-        await Atlas.sendMessage(
+        await Styx.sendMessage(
           m.from,
           {
             video: {
@@ -81,7 +81,7 @@ module.exports = {
         let thumbnail = result.data.thumbnail;
 
         let resText2 = `  *『  ⚡️ Lyrics Search Engine ⚡️  』*\n\n\n_Search Term:_ *${text}*\n\n\n*📍 Lyrics:* \n\n${lyrics}\n\n\n_*Powered by:*_ *Scrappy API - by FantoX*\n\n_*Url:*_ https://github.com/FantoX001/Scrappy-API \n`;
-        await Atlas.sendMessage(
+        await Styx.sendMessage(
           m.from,
           {
             image: {
@@ -139,7 +139,7 @@ module.exports = {
           //sections,
         };
 
-        Atlas.sendMessage(m.from, buttonMessage, { quoted: m });
+        Styx.sendMessage(m.from, buttonMessage, { quoted: m });
         break;
 
       case "ringtone":
@@ -152,7 +152,7 @@ module.exports = {
         await doReact("🎶");
         let resultRT = await ringtone(text);
         let resultR = resultRT[Math.floor(Math.random() * resultRT.length)];
-        Atlas.sendMessage(
+        Styx.sendMessage(
           m.from,
           {
             audio: { url: resultR.audio },
@@ -178,7 +178,7 @@ module.exports = {
 
         let weathertext = `           🌤 *Weather Report* 🌤  \n\n🔎 *Search Location:* ${myweather.data.name}\n*💮 Country:* ${myweather.data.sys.country}\n🌈 *Weather:* ${myweather.data.weather[0].description}\n🌡️ *Temperature:* ${myweather.data.main.temp}°C\n❄️ *Minimum Temperature:* ${myweather.data.main.temp_min}°C\n📛 *Maximum Temperature:* ${myweather.data.main.temp_max}°C\n💦 *Humidity:* ${myweather.data.main.humidity}%\n🎐 *Wind:* ${myweather.data.wind.speed} km/h\n`;
 
-        await Atlas.sendMessage(
+        await Styx.sendMessage(
           m.from,
           {
             video: {
@@ -221,7 +221,7 @@ module.exports = {
           background: "transparent",
         });
         let stickerBuffer2 = await stickerMess.toBuffer();
-        Atlas.sendMessage(m.from, { sticker: stickerBuffer2 }, { quoted: m });
+        Styx.sendMessage(m.from, { sticker: stickerBuffer2 }, { quoted: m });
         break;
 
       case "gh":
@@ -242,7 +242,7 @@ module.exports = {
         let GhUserPP = GHuserInfo.avatar_url;
         let resText4 = `        *🏮 GitHub User Info 🏮*\n\n_🎀 Username:_ *${GHuserInfo.login}*\n_🧩 Name:_ *${GHuserInfo.name}*\n\n_🧣 Bio:_ *${GHuserInfo.bio}*\n\n_🍁 Total Followers:_ *${GHuserInfo.followers}*\n_🔖 Total Public Repos:_ *${GHuserInfo.public_repos}*\n_📌 Website:_ ${GHuserInfo.blog}\n`;
 
-        Atlas.sendMessage(
+        Styx.sendMessage(
           m.from,
           {
             image: { url: GhUserPP, mimetype: "image/jpeg" },

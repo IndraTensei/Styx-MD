@@ -13,7 +13,7 @@ module.exports = {
   alias: [...mergedCommands],
   uniquecommands: ["igdl", "fbdl", "mediafiredl"],
   description: "All file dowloader commands",
-  start: async (Atlas, m, { inputCMD, text, doReact, prefix, pushName }) => {
+  start: async (Styx, m, { inputCMD, text, doReact, prefix, pushName }) => {
     switch (inputCMD) {
       case "igdl":
       case "instadl":
@@ -30,7 +30,7 @@ module.exports = {
           );
         }
         await doReact("📥");
-        await Atlas.sendMessage(
+        await Styx.sendMessage(
           m.from,
           { text: "*Please wait, I'm downloading your video...*" },
           { quoted: m }
@@ -42,7 +42,7 @@ module.exports = {
           );
           const scrappedURL = res.data.videoUrl;
 
-          Atlas.sendMessage(
+          Styx.sendMessage(
             m.from,
             {
               video: { url: scrappedURL },
@@ -88,7 +88,7 @@ Downloading...`;
         await doReact("📥");
         await m.reply(txt);
 
-        Atlas.sendMessage(
+        Styx.sendMessage(
           m.from,
           {
             document: { url: MDF[0].url },
@@ -122,7 +122,7 @@ Downloading...`;
           );
           const scrappedURL = res.data.videoUrl;
 
-          Atlas.sendMessage(
+          Styx.sendMessage(
             m.from,
             {
               video: { url: scrappedURL },

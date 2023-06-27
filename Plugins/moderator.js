@@ -68,7 +68,7 @@ module.exports = {
   ],
   description: "All Moderator/Owner Commands",
   start: async (
-    Atlas,
+    Styx,
     m,
     {
       inputCMD,
@@ -124,7 +124,7 @@ module.exports = {
         try {
           if (isUsermod) {
             await doReact("✅");
-            return Atlas.sendMessage(
+            return Styx.sendMessage(
               m.from,
               {
                 text: `@${userId.split("@")[0]} is already registered as a mod`,
@@ -138,7 +138,7 @@ module.exports = {
           await doReact("✅");
           await addMod(userId)
             .then(() => {
-              Atlas.sendMessage(
+              Styx.sendMessage(
                 m.from,
                 {
                   text: `@${
@@ -178,7 +178,7 @@ module.exports = {
         try {
           if (!isUsermod) {
             await doReact("✅");
-            return Atlas.sendMessage(
+            return Styx.sendMessage(
               m.from,
               {
                 text: `@${userId.split("@")[0]} is not registered as a mod !`,
@@ -190,7 +190,7 @@ module.exports = {
 
           await delMod(userId)
             .then(() => {
-              Atlas.sendMessage(
+              Styx.sendMessage(
                 m.from,
                 {
                   text: `@${
@@ -248,7 +248,7 @@ module.exports = {
             textM += `\n\n📛 *Don't Spam them to avoid Blocking !*\n\n🎀 For any help, type *${prefix}support* and ask in group.\n\n*💫 Thanks for using ${botName}. 💫*\n`;
           }
 
-          Atlas.sendMessage(
+          Styx.sendMessage(
             m.from,
             {
               video: { url: botVideo },
@@ -261,7 +261,7 @@ module.exports = {
         } catch (err) {
           console.log(err);
           await doReact("❌");
-          return Atlas.sendMessage(
+          return Styx.sendMessage(
             m.from,
             { text: `An internal error occurred while fetching the mod list.` },
             { quoted: m }
@@ -274,7 +274,7 @@ module.exports = {
       case "banuser":
         if (!text && !m.quoted) {
           await doReact("❌");
-          return Atlas.sendMessage(
+          return Styx.sendMessage(
             m.from,
             { text: `Please tag a user to *Ban*!` },
             { quoted: m }
@@ -287,7 +287,7 @@ module.exports = {
         chechSenderModStatus = await checkMod(m.sender);
         if (!chechSenderModStatus && !isCreator && !isintegrated) {
           await doReact("❌");
-          return Atlas.sendMessage(m.from, {
+          return Styx.sendMessage(m.from, {
             text: `Sorry, only *Owners* and *Mods* can use this command !`,
             quoted: m,
           });
@@ -303,7 +303,7 @@ module.exports = {
         }
         if (chechBanStatus) {
           await doReact("✅");
-          return Atlas.sendMessage(
+          return Styx.sendMessage(
             m.from,
             {
               text: `@${mentionedUser.split("@")[0]} is already *Banned* !`,
@@ -314,7 +314,7 @@ module.exports = {
         } else {
           banUser(userId).then(async () => {
             await doReact("✅");
-            await Atlas.sendMessage(
+            await Styx.sendMessage(
               m.from,
               {
                 text: `@${
@@ -342,7 +342,7 @@ module.exports = {
         chechSenderModStatus = await checkMod(m.sender);
         if (!chechSenderModStatus && !isCreator && !isintegrated) {
           await doReact("❌");
-          return Atlas.sendMessage(m.from, {
+          return Styx.sendMessage(m.from, {
             text: `Sorry, only *Owners* and *Mods* can use this command !`,
             quoted: m,
           });
@@ -352,7 +352,7 @@ module.exports = {
         if (chechBanStatus) {
           unbanUser(userId).then(async () => {
             await doReact("✅");
-            await Atlas.sendMessage(
+            await Styx.sendMessage(
               m.from,
               {
                 text: `@${
@@ -365,7 +365,7 @@ module.exports = {
           });
         } else {
           await doReact("❌");
-          return Atlas.sendMessage(m.from, {
+          return Styx.sendMessage(m.from, {
             text: `@${mentionedUser.split("@")[0]} is not *Banned* !`,
             mentions: [mentionedUser],
             quoted: m,
@@ -376,7 +376,7 @@ module.exports = {
       case "setchar":
         if (!text) {
           await doReact("❌");
-          return Atlas.sendMessage(
+          return Styx.sendMessage(
             m.from,
             { text: `Please enter a character number between 0-19 to set !` },
             { quoted: m }
@@ -385,7 +385,7 @@ module.exports = {
         chechSenderModStatus = await checkMod(m.sender);
         if (!chechSenderModStatus && !isCreator && !isintegrated) {
           await doReact("❌");
-          return Atlas.sendMessage(m.from, {
+          return Styx.sendMessage(m.from, {
             text: `Sorry, only *Owners* and *Mods* can use this command !`,
             quoted: m,
           });
@@ -394,14 +394,14 @@ module.exports = {
         const intinput = parseInt(text);
         if (intinput < 0 || intinput > 19) {
           await doReact("❌");
-          return Atlas.sendMessage(
+          return Styx.sendMessage(
             m.from,
             { text: `Please enter a character number between 0-19 to set !` },
             { quoted: m }
           );
         }
         const botNames = [
-          "Atlas MD",
+          "Styx MD",
           "Power",
           "Makima",
           "Denji",
@@ -448,7 +448,7 @@ module.exports = {
         checkChar = await getChar();
         if (checkChar === intinput) {
           await doReact("✅");
-          return Atlas.sendMessage(
+          return Styx.sendMessage(
             m.from,
             {
               image: { url: botLogos[intinput] },
@@ -459,7 +459,7 @@ module.exports = {
         }
         await doReact("✅");
         await setChar(intinput);
-        await Atlas.sendMessage(
+        await Styx.sendMessage(
           m.from,
           {
             image: { url: botLogos[intinput] },
@@ -480,7 +480,7 @@ module.exports = {
         chechSenderModStatus = await checkMod(m.sender);
         if (!chechSenderModStatus && !isCreator && !isintegrated) {
           await doReact("❌");
-          return Atlas.sendMessage(m.from, {
+          return Styx.sendMessage(m.from, {
             text: `Sorry, only *Owners* and *Mods* can use this command !`,
             quoted: m,
           });
@@ -490,7 +490,7 @@ module.exports = {
         if (args[0] === "on") {
           if (pmChatBotStatus) {
             await doReact("❌");
-            return Atlas.sendMessage(m.from, {
+            return Styx.sendMessage(m.from, {
               text: `Private Chatbot is already *Enabled* !`,
               quoted: m,
             });
@@ -503,7 +503,7 @@ module.exports = {
         } else if (args[0] === "off") {
           if (!pmChatBotStatus) {
             await doReact("❌");
-            return Atlas.sendMessage(m.from, {
+            return Styx.sendMessage(m.from, {
               text: `Private Chatbot is already *Disabled* !`,
               quoted: m,
             });
@@ -530,7 +530,7 @@ module.exports = {
         chechSenderModStatus = await checkMod(m.sender);
         if (!chechSenderModStatus && !isCreator && !isintegrated) {
           await doReact("❌");
-          return Atlas.sendMessage(m.from, {
+          return Styx.sendMessage(m.from, {
             text: `Sorry, only *Owners* and *Mods* can use this command !`,
             quoted: m,
           });
@@ -539,7 +539,7 @@ module.exports = {
         groupBanStatus = await checkBanGroup(m.from);
         if (groupBanStatus) {
           await doReact("❌");
-          return Atlas.sendMessage(m.from, {
+          return Styx.sendMessage(m.from, {
             text: `This group is already *Banned* !`,
             quoted: m,
           });
@@ -561,7 +561,7 @@ module.exports = {
         chechSenderModStatus = await checkMod(m.sender);
         if (!chechSenderModStatus && !isCreator && !isintegrated) {
           await doReact("❌");
-          return Atlas.sendMessage(m.from, {
+          return Styx.sendMessage(m.from, {
             text: `Sorry, only *Owners* and *Mods* can use this command !`,
             quoted: m,
           });
@@ -570,7 +570,7 @@ module.exports = {
         groupBanStatus = await checkBanGroup(m.from);
         if (!groupBanStatus) {
           await doReact("❌");
-          return Atlas.sendMessage(m.from, {
+          return Styx.sendMessage(m.from, {
             text: `This group is not banned !`,
             quoted: m,
           });
@@ -594,7 +594,7 @@ module.exports = {
         chechSenderModStatus = await checkMod(m.sender);
         if (!chechSenderModStatus && !isCreator && !isintegrated) {
           await doReact("❌");
-          return Atlas.sendMessage(m.from, {
+          return Styx.sendMessage(m.from, {
             text: `Sorry, only *Owners* and *Mods* can use this command !`,
             quoted: m,
           });

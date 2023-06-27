@@ -16,14 +16,14 @@ module.exports = {
   alias: [...mergedCommands],
   uniquecommands: ["sc", "support"],
   description: "All miscleaneous commands",
-  start: async (Atlas, m, { pushName, prefix, inputCMD, doReact }) => {
-    let pic = fs.readFileSync("./Assets/Atlas.jpg");
+  start: async (Styx, m, { pushName, prefix, inputCMD, doReact }) => {
+    let pic = fs.readFileSync("./Assets/Styx.jpg");
     switch (inputCMD) {
       case "script":
       case "sc":
         await doReact("🧣");
         let repoInfo = await axios.get(
-          "https://api.github.com/repos/FantoX001/Atlas-MD"
+          "https://api.github.com/repos/IndraTensei/Styx-MD"
         );
         let repo = repoInfo.data;
         let txt = `            🧣 *${botName}'s Script* 🧣\n\n*🎀 Total Forks:* ${
@@ -34,22 +34,22 @@ module.exports = {
           2
         )} MB\n*📅 Last Updated:* ${repo.updated_at}\n\n*🔗 Repo Link:* ${
           repo.html_url
-        }\n\n❝ Dont forget to give a Star ⭐ to the repo. It's made with restless hardwork by *Team ATLAS*. ❞\n\n*©️ Team ATLAS- 2023*`;
-        Atlas.sendMessage(m.from, { image: pic, caption: txt }, { quoted: m });
+        }\n\n❝ Dont forget to give a Star ⭐ to the repo. It's made with restless hardwork by *Team Styx*. ❞\n\n*©️ Team Styx- 2023*`;
+        Styx.sendMessage(m.from, { image: pic, caption: txt }, { quoted: m });
         break;
 
       case "support":
       case "supportgc":
         await doReact("🔰");
-        let txt2 = `              🧣 *Support Group* 🧣\n\n*${botName}* is an open source project, and we are always happy to help you.\n\n*Link:* ${suppL}\n\n*Note:* Please don't spam in the group, and don't message *Admins directly* without permission. Ask for help inside *Group*.\n\n*Thanks for using Atlas.*`;
-        Atlas.sendMessage(m.from, { image: pic, caption: txt2 }, { quoted: m });
+        let txt2 = `              🧣 *Support Group* 🧣\n\n*${botName}* is an open source project, and we are always happy to help you.\n\n*Link:* ${suppL}\n\n*Note:* Please don't spam in the group, and don't message *Admins directly* without permission. Ask for help inside *Group*.\n\n*Thanks for using Styx.*`;
+        Styx.sendMessage(m.from, { image: pic, caption: txt2 }, { quoted: m });
         break;
 
       case "help":
       case "h":
       case "menu":
         await doReact("☃️");
-        await Atlas.sendPresenceUpdate("composing", m.from);
+        await Styx.sendPresenceUpdate("composing", m.from);
         function readUniqueCommands(dirPath) {
           const allCommands = [];
 
@@ -98,8 +98,8 @@ module.exports = {
 
         const allCommands = readUniqueCommands(pluginsDir);
         const formattedCommands = formatCommands(allCommands);
-        var helpText = `\nKonnichiwa *${pushName}* Senpai,\n\nI am *${botName}*, a WhatsApp bot built to take your boring WhatsApp experience into next level.\n\n*🔖 My Prefix is:*  ${prefix}\n\n${formattedCommands}\n\n\n*©️ Team ATLAS- 2023*`;
-        await Atlas.sendMessage(
+        var helpText = `\nKonnichiwa *${pushName}* Senpai,\n\nI am *${botName}*, a WhatsApp bot built to take your boring WhatsApp experience into next level.\n\n*🔖 My Prefix is:*  ${prefix}\n\n${formattedCommands}\n\n\n*Styx- 2023*`;
+        await Styx.sendMessage(
           m.from,
           { video: { url: botVideo }, gifPlayback: true, caption: helpText },
           { quoted: m }

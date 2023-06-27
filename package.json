@@ -1,5 +1,5 @@
 {
-  "name": "atlas",
+  "name": "Styx",
   "version": "3.1.0",
   "description": "The future of WhatsApp bots now with plugin support.",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FantoX001/Atlas-MD.git"
+    "url": "git+https://github.com/FantoX001/Styx-MD.git"
   },
   "keywords": [
     "bot",
@@ -22,9 +22,9 @@
   "author": "FantoX001",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FantoX001/Atlas-MD/issues"
+    "url": "https://github.com/FantoX001/Styx-MD/issues"
   },
-  "homepage": "https://github.com/FantoX001/Atlas-MD#readme",
+  "homepage": "https://github.com/FantoX001/Styx-MD#readme",
   "dependencies": {
     "@adiwajshing/keyed-db": "^0.2.4",
     "@fantox01/lyrics-scraper": "^1.0.1",
@@ -40,6 +40,7 @@
     "discord.js": "^14.8.0",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
+    "ffmpeg": "^0.0.4",
     "figlet": "^1.5.2",
     "file-type": "^16.5.4",
     "fluent-ffmpeg": "^2.1.2",
