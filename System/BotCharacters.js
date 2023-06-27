@@ -11,10 +11,10 @@
 /                                                                                   / 
 /-----------------------------------------------------------------------------------/
 / Author and Main Developer: FantoX                                                 /
-/ Github: https://github.com/FantoX001/Atlas-MD                                     /
-/ Powered By: Team ATLAS                                                            /
+/ Github: https://github.com/FantoX001/Styx-MD                                     /
+/ Powered By: Team Styx                                                            /
 /-----------------------------------------------------------------------------------/
-/             Meet Team ATLAS who holds all rights to this repository:              /
+/             Meet Team Styx who holds all rights to this repository:              /
 /                                                                                   /
 / 1. Pratyush - https://github.com/pratyush4932                                     /
 / 2. Ahmii - https://github.com/Ahmii-kun                                           /               
@@ -31,7 +31,7 @@
 
 
 /* ---Added Anime Character list---  /
- 0 --- Atlas MD
+ 0 --- Styx MD
  1 --- Power
  2 --- Makima
  3 --- Denji
@@ -65,8 +65,8 @@ Don't forget to change "charlist.js" and "setchar.js" inside "Plugins\moderator.
 
 
 global.charID0 = {
-    botName : "Atlas",
-    botVideo : "https://graph.org/file/e3b2ee218b98b8679bf98.mp4",
+    botName : "Styx",
+    botVideo : "https://graph.org/file/330eb12711fb92b56bc42.png",
     botImage1 : "https://i.imgur.com/MClOeqe.jpeg",
     botImage2 : "https://i.imgur.com/MClOeqe.jpeg",
     botImage3 : "https://i.imgur.com/MClOeqe.jpeg",

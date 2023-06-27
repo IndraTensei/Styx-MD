@@ -36,7 +36,7 @@ module.exports = {
   ],
   description: "All Sticker formatting Commands",
   start: async (
-    Atlas,
+    Styx,
     m,
     {
       inputCMD,
@@ -74,13 +74,13 @@ module.exports = {
             background: "transparent",
           });
           const stickerBuffer = await stickerMess.toBuffer();
-          Atlas.sendMessage(m.from, { sticker: stickerBuffer }, { quoted: m });
+          Styx.sendMessage(m.from, { sticker: stickerBuffer }, { quoted: m });
         } else if (/video/.test(mime)) {
           await doReact("🔖");
           let mediaMess = await quoted.download();
           if ((quoted.msg || quoted).seconds > 15) {
             await doReact("❌");
-            return Atlas.sendMessage(
+            return Styx.sendMessage(
               m.from,
               { text: "Please send video less than 15 seconds." },
               { quoted: m }
@@ -96,7 +96,7 @@ module.exports = {
             background: "transparent",
           });
           const stickerBuffer2 = await stickerMess.toBuffer();
-          Atlas.sendMessage(m.from, { sticker: stickerBuffer2 }, { quoted: m });
+          Styx.sendMessage(m.from, { sticker: stickerBuffer2 }, { quoted: m });
         } else {
           await doReact("❌");
           m.reply(
@@ -134,7 +134,7 @@ module.exports = {
             background: "transparent",
           });
           const stickerBuffer = await stickerMess.toBuffer();
-          Atlas.sendMessage(m.from, { sticker: stickerBuffer }, { quoted: m });
+          Styx.sendMessage(m.from, { sticker: stickerBuffer }, { quoted: m });
         } else {
           await doReact("❌");
           m.reply(
@@ -159,7 +159,7 @@ module.exports = {
             background: "transparent",
           });
           const stickerBuffer = await stickerMess.toBuffer();
-          Atlas.sendMessage(m.from, { sticker: stickerBuffer }, { quoted: m });
+          Styx.sendMessage(m.from, { sticker: stickerBuffer }, { quoted: m });
         } else if (/video/.test(mime)) {
           await doReact("🃏");
           let mediaMess = await quoted.download();
@@ -177,7 +177,7 @@ module.exports = {
             background: "transparent",
           });
           const stickerBuffer2 = await stickerMess.toBuffer();
-          Atlas.sendMessage(m.from, { sticker: stickerBuffer2 }, { quoted: m });
+          Styx.sendMessage(m.from, { sticker: stickerBuffer2 }, { quoted: m });
         } else {
           await doReact("❌");
           m.reply(
@@ -196,7 +196,7 @@ module.exports = {
             );
           }
           await doReact("📮");
-          media = await Atlas.downloadAndSaveMediaMessage(quoted);
+          media = await Styx.downloadAndSaveMediaMessage(quoted);
           mem = await TelegraPh(media);
           meme = `https://api.memegen.link/images/custom/-/${text}.png?background=${mem}`;
 
@@ -211,7 +211,7 @@ module.exports = {
           });
 
           const stickerBuffer2 = await stickerMess.toBuffer();
-          await Atlas.sendMessage(
+          await Styx.sendMessage(
             m.from,
             { sticker: stickerBuffer2 },
             { quoted: m }
@@ -230,19 +230,19 @@ module.exports = {
         if (!text && !m.quoted) {
           await doReact("❔");
           return m.reply(
-            `Please provide a text (Type or mention a message) !\n\nExample: ${prefix}q Atlas MD is OP`
+            `Please provide a text (Type or mention a message) !\n\nExample: ${prefix}q Styx MD is OP`
           );
         }
 
         if (m.quoted) {
           try {
-            userPfp = await Atlas.profilePictureUrl(m.quoted.sender, "image");
+            userPfp = await Styx.profilePictureUrl(m.quoted.sender, "image");
           } catch (e) {
             userPfp = botImage3;
           }
         } else {
           try {
-            userPfp = await Atlas.profilePictureUrl(m.sender, "image");
+            userPfp = await Styx.profilePictureUrl(m.sender, "image");
           } catch (e) {
             userPfp = botImage3;
           }
@@ -301,7 +301,7 @@ module.exports = {
         });
 
         const stickerBuffer2 = await stickerMess.toBuffer();
-        await Atlas.sendMessage(
+        await Styx.sendMessage(
           m.from,
           { sticker: stickerBuffer2 },
           { quoted: m }
@@ -349,7 +349,7 @@ module.exports = {
         });
 
         const stickerBuffer = await stickerMess2.toBuffer();
-        await Atlas.sendMessage(
+        await Styx.sendMessage(
           m.from,
           { sticker: stickerBuffer },
           { quoted: m }

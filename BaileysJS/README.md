@@ -8,4 +8,4 @@
 
 <br>
 
-### 💫 Use it as per the [License](https://github.com/FantoX001/Atlas-MD/blob/main/LICENSE) and support original [Baileys owner](https://github.com/adiwajshing) and [Contributors](https://github.com/WhiskeySockets/Baileys/graphs/contributors) who made this Atlas MD project a success.
+### 💫 Use it as per the [License](https://github.com/FantoX001/Styx-MD/blob/main/LICENSE) and support original [Baileys owner](https://github.com/adiwajshing) and [Contributors](https://github.com/WhiskeySockets/Baileys/graphs/contributors) who made this Styx MD project a success.

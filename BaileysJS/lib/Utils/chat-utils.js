@@ -703,8 +703,8 @@ const processSyncAction = (syncAction, ev, me, initialSyncOpts, logger) => {
     }
     function isValidPatchBasedOnMessageRange(chat, msgRange) {
         const lastMsgTimestamp = (msgRange === null || msgRange === void 0 ? void 0 : msgRange.lastMessageTimestamp) || (msgRange === null || msgRange === void 0 ? void 0 : msgRange.lastSystemMessageTimestamp) || 0;
-        const chatLastMsgTimestamp = (chat === null || chat === void 0 ? void 0 : chat.lastMessageRecvTimestamp) || 0;
-        return lastMsgTimestamp >= chatLastMsgTimestamp;
+        const chStyxtMsgTimestamp = (chat === null || chat === void 0 ? void 0 : chat.lastMessageRecvTimestamp) || 0;
+        return lastMsgTimestamp >= chStyxtMsgTimestamp;
     }
 };
 exports.processSyncAction = processSyncAction;

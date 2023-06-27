@@ -67,7 +67,7 @@ module.exports = {
   ],
   description: "All Audio Editing Commands",
   start: async (
-    Atlas,
+    Styx,
     m,
     {
       inputCMD,
@@ -100,7 +100,7 @@ module.exports = {
             "『 *Attention Admins* 』\n\n*🎀 Message:* Check this Out !";
         }
         await doReact("🏅");
-        Atlas.sendMessage(
+        Styx.sendMessage(
           m.from,
           { text: message, mentions: groupAdmin },
           { quoted: m }
@@ -127,14 +127,14 @@ module.exports = {
         oldGCName = metadata.subject;
 
         try {
-          ppgc = await Atlas.profilePictureUrl(m.from, "image");
+          ppgc = await Styx.profilePictureUrl(m.from, "image");
         } catch {
           ppgc = botImage1;
         }
 
-        await Atlas.groupUpdateSubject(m.from, text)
+        await Styx.groupUpdateSubject(m.from, text)
           .then((res) =>
-            Atlas.sendMessage(
+            Styx.sendMessage(
               m.from,
               {
                 image: { url: ppgc, mimetype: "image/jpeg" },
@@ -169,7 +169,7 @@ module.exports = {
             id: m.quoted.id,
           };
           await doReact("📛");
-          await Atlas.sendMessage(m.from, { delete: key });
+          await Styx.sendMessage(m.from, { delete: key });
         } else {
           if (!isAdmin) {
             await doReact("❌");
@@ -184,7 +184,7 @@ module.exports = {
             participant: m.quoted.sender,
           };
 
-          await Atlas.sendMessage(m.from, { delete: key });
+          await Styx.sendMessage(m.from, { delete: key });
         }
 
         break;
@@ -218,7 +218,7 @@ module.exports = {
 
         userId = (await mentionedUser) || m.msg.contextInfo.participant;
         if (!groupAdmin.includes(userId)) {
-          return Atlas.sendMessage(
+          return Styx.sendMessage(
             m.from,
             {
               text: `@${
@@ -231,9 +231,9 @@ module.exports = {
         }
         await doReact("📉");
         try {
-          await Atlas.groupParticipantsUpdate(m.from, [userId], "demote").then(
+          await Styx.groupParticipantsUpdate(m.from, [userId], "demote").then(
             (res) =>
-              Atlas.sendMessage(
+              Styx.sendMessage(
                 m.from,
                 {
                   text: `Sorry @${
@@ -248,7 +248,7 @@ module.exports = {
           );
         } catch (error) {
           await doReact("❌");
-          Atlas.sendMessage(
+          Styx.sendMessage(
             m.from,
             {
               text: `An error occured while trying to demote @${
@@ -269,17 +269,17 @@ module.exports = {
           return m.reply(`*Bot* must be *Admin* in order to use this Command!`);
         }
         await doReact("🧩");
-        let link = await Atlas.groupInviteCode(m.from);
+        let link = await Styx.groupInviteCode(m.from);
         let linkcode = `https://chat.whatsapp.com/${link}`;
 
         try {
-          ppgc = await Atlas.profilePictureUrl(m.from, "image");
+          ppgc = await Styx.profilePictureUrl(m.from, "image");
         } catch {
           ppgc = botImage1;
         }
 
         try {
-          await Atlas.sendMessage(
+          await Styx.sendMessage(
             m.from,
             {
               image: { url: ppgc, mimetype: "image/jpeg" },
@@ -288,7 +288,7 @@ module.exports = {
             { quoted: m }
           );
         } catch (err) {
-          Atlas.sendMessage(
+          Styx.sendMessage(
             m.from,
             { text: `${mess.botadmin}` },
             { quoted: m }
@@ -309,15 +309,15 @@ module.exports = {
         await doReact("⚜️");
 
         if (text === "close") {
-          await Atlas.groupSettingUpdate(m.from, "announcement").then((res) =>
+          await Styx.groupSettingUpdate(m.from, "announcement").then((res) =>
             m.reply(`Group has been closed!`)
           );
         } else if (text === "open") {
-          await Atlas.groupSettingUpdate(m.from, "not_announcement").then(
+          await Styx.groupSettingUpdate(m.from, "not_announcement").then(
             (res) => m.reply(`Group has been opened!`)
           );
         } else {
-          await Atlas.sendMessage(
+          await Styx.sendMessage(
             m.from,
             {
               image: { url: botImage2 },
@@ -337,7 +337,7 @@ module.exports = {
         }
         await doReact("🎊");
         try {
-          ppgc = await Atlas.profilePictureUrl(m.from, "image");
+          ppgc = await Styx.profilePictureUrl(m.from, "image");
         } catch {
           ppgc = botImage1;
         }
@@ -357,7 +357,7 @@ module.exports = {
           groupAdmins.length
         }*\n_🎈 Total Participants:_ *${metadata.participants.length}*\n`;
 
-        await Atlas.sendMessage(
+        await Styx.sendMessage(
           m.from,
           {
             image: { url: ppgc, mimetype: "image/jpeg" },
@@ -386,7 +386,7 @@ module.exports = {
         }
 
         await doReact("🎌");
-        Atlas.sendMessage(
+        Styx.sendMessage(
           m.from,
           { text: message2, mentions: participants.map((a) => a.id) },
           { quoted: m }
@@ -399,14 +399,14 @@ module.exports = {
           return m.reply(`*You* must be *Admin* in order to use this Command!`);
         }
         await doReact("👋");
-        await Atlas.sendMessage(m.from, {
+        await Styx.sendMessage(m.from, {
           image: { url: "https://wallpapercave.com/wp/wp9667218.png" },
           caption: `I'm Leaving this group on request... \n\nTake care everyone :)`,
           mentions: participants.map((a) => a.id),
           quoted: m,
         }).then(async () => {
-          Atlas.groupLeave(m.from).catch((e) => {
-            Atlas.sendMessage(
+          Styx.groupLeave(m.from).catch((e) => {
+            Styx.sendMessage(
               m.from,
               { text: `An error Occurd !` },
               { quoted: m }
@@ -444,7 +444,7 @@ module.exports = {
 
         userId = (await mentionedUser) || m.msg.contextInfo.participant;
         if (groupAdmin.includes(userId)) {
-          return Atlas.sendMessage(
+          return Styx.sendMessage(
             m.from,
             {
               text: `@${
@@ -457,9 +457,9 @@ module.exports = {
         }
         await doReact("💹");
         try {
-          await Atlas.groupParticipantsUpdate(m.from, [userId], "promote").then(
+          await Styx.groupParticipantsUpdate(m.from, [userId], "promote").then(
             (res) =>
-              Atlas.sendMessage(
+              Styx.sendMessage(
                 m.from,
                 {
                   text: `Congratulations  @${
@@ -473,7 +473,7 @@ module.exports = {
               )
           );
         } catch (error) {
-          Atlas.sendMessage(
+          Styx.sendMessage(
             m.from,
             {
               text: `An error occured while trying to demote @${
@@ -507,7 +507,7 @@ module.exports = {
 
         if (!text && !m.quoted) {
           await doReact("❔");
-          return Atlas.sendMessage(
+          return Styx.sendMessage(
             m.from,
             { text: `Please tag a user to *Remove* !` },
             { quoted: m }
@@ -521,7 +521,7 @@ module.exports = {
         let users = (await mentionedUser) || m.msg.contextInfo.participant;
         await doReact("⛔");
         if (groupAdmin.includes(users)) {
-          return Atlas.sendMessage(
+          return Styx.sendMessage(
             m.from,
             {
               text: `*Command Rejected !* @${
@@ -533,9 +533,9 @@ module.exports = {
           );
         }
 
-        await Atlas.groupParticipantsUpdate(m.from, [users], "remove").then(
+        await Styx.groupParticipantsUpdate(m.from, [users], "remove").then(
           (res) =>
-            Atlas.sendMessage(
+            Styx.sendMessage(
               m.from,
               {
                 text: `@${
@@ -561,7 +561,7 @@ module.exports = {
 
         if (!/image/.test(mime)) {
           await doReact("❌");
-          return Atlas.sendMessage(
+          return Styx.sendMessage(
             m.from,
             {
               text: `Send/reply Image With Caption ${
@@ -573,10 +573,10 @@ module.exports = {
         }
         await doReact("🎴");
 
-        let quotedimage = await Atlas.downloadAndSaveMediaMessage(quoted);
+        let quotedimage = await Styx.downloadAndSaveMediaMessage(quoted);
         var { preview } = await generatePP(quotedimage);
 
-        await Atlas.query({
+        await Styx.query({
           tag: "iq",
           attrs: {
             to: m.from,
@@ -593,9 +593,9 @@ module.exports = {
         });
         fs.unlinkSync(quotedimage);
 
-        ppgc = await Atlas.profilePictureUrl(m.from, "image");
+        ppgc = await Styx.profilePictureUrl(m.from, "image");
 
-        Atlas.sendMessage(
+        Styx.sendMessage(
           m.from,
           {
             image: { url: ppgc },
@@ -621,7 +621,7 @@ module.exports = {
 
         if (!text && !m.quoted) {
           await doReact("❔");
-          return Atlas.sendMessage(
+          return Styx.sendMessage(
             m.from,
             { text: `Please provide a new group description !` },
             { quoted: m }
@@ -631,15 +631,15 @@ module.exports = {
         await doReact("📑");
 
         try {
-          ppgc = await Atlas.profilePictureUrl(m.from, "image");
+          ppgc = await Styx.profilePictureUrl(m.from, "image");
         } catch {
           ppgc = botImage1;
         }
 
         var newGCdesc = m.quoted ? m.quoted.msg : text;
 
-        await Atlas.groupUpdateDescription(m.from, newGCdesc).then((res) =>
-          Atlas.sendMessage(
+        await Styx.groupUpdateDescription(m.from, newGCdesc).then((res) =>
+          Styx.sendMessage(
             m.from,
             {
               image: { url: ppgc, mimetype: "image/jpeg" },
@@ -664,13 +664,13 @@ module.exports = {
         if (m.from == "120363040838753957@g.us") {
           await doReact("❌");
           return m.reply(
-            "Sorry, this command is not allowed in *Atlas Support Group* !\n\nYou are not allowed to change support group link !"
+            "Sorry, this command is not allowed in *Styx Support Group* !\n\nYou are not allowed to change support group link !"
           );
         }
         await doReact("💫");
 
-        await Atlas.groupRevokeInvite(m.from).then((res) =>
-          Atlas.sendMessage(
+        await Styx.groupRevokeInvite(m.from).then((res) =>
+          Styx.sendMessage(
             m.from,
             { text: `Group link has been *Updated* Successfully!` },
             { quoted: m }
@@ -710,7 +710,7 @@ module.exports = {
         mess += `╰────────────⊰\n\n                    *Thank You*\n`;
 
         await doReact("〽️");
-        Atlas.sendMessage(
+        Styx.sendMessage(
           m.from,
           { text: mess, mentions: participants.map((a) => a.id) },
           { quoted: m }

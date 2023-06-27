@@ -1,15 +1,15 @@
 const {checkWelcome}= require('./MongoDB/MongoDb_Core');
 
-module.exports = async (Atlas, anu) => {
+module.exports = async (Styx, anu) => {
   try {
-    let metadata = await Atlas.groupMetadata(anu.id);
+    let metadata = await Styx.groupMetadata(anu.id);
     let participants = anu.participants;
     let desc = metadata.desc;
     if (desc == undefined) desc = "No Description";
 
     for (let num of participants) {
       try {
-        ppuser = await Atlas.profilePictureUrl(num, "image");
+        ppuser = await Styx.profilePictureUrl(num, "image");
       } catch {
         ppuser = botImage4;
       }
@@ -22,7 +22,7 @@ module.exports = async (Atlas, anu) => {
             metadata.subject
           }\n`
         );
-        Atlastext = `
+        Styxtext = `
 Hello @${WAuserName.split("@")[0]} Senpai,
 
 Welcome to *${metadata.subject}*.
@@ -34,9 +34,9 @@ ${desc}
 *Thank You.*
   `;
         if (WELstatus) {
-          await Atlas.sendMessage(anu.id, {
+          await Styx.sendMessage(anu.id, {
             image: { url: ppuser },
-            caption: Atlastext,
+            caption: Styxtext,
             mentions: [num],
           });
         }
@@ -48,13 +48,13 @@ ${desc}
             metadata.subject
           }\n`
         );
-        Atlastext = `
+        Styxtext = `
   @${WAuserName.split("@")[0]} Senpai left the group.
   `;
         if (WELstatus) {
-          await Atlas.sendMessage(anu.id, {
+          await Styx.sendMessage(anu.id, {
             image: { url: ppuser },
-            caption: Atlastext,
+            caption: Styxtext,
             mentions: [num],
           });
         }

@@ -1,6 +1,6 @@
 require("./Configurations");
 const {
-  default: atlasConnect,
+  default: StyxConnect,
   DisconnectReason,
   fetchLatestBaileysVersion,
   downloadContentFromMessage,
@@ -38,10 +38,10 @@ const store = makeInMemoryStore({
   }),
 });
 
-// Atlas Server configuration
+// Styx Server configuration
 let QR_GENERATE = "invalid";
 let status;
-const startAtlas = async () => {
+const startStyx = async () => {
   try {
     await mongoose.connect(mongodb).then(() => {
       console.log(
@@ -60,7 +60,7 @@ const startAtlas = async () => {
 
   const { saveState, state, clearState } = await getAuthFromDatabase();
   console.log(
-    figlet.textSync("ATLAS", {
+    figlet.textSync("Styx", {
       font: "Standard",
       horizontalLayout: "default",
       vertivalLayout: "default",
@@ -74,17 +74,17 @@ const startAtlas = async () => {
 
   const { version, isLatest } = await fetchLatestBaileysVersion();
 
-  const Atlas = atlasConnect({
+  const Styx = StyxConnect({
     logger: pino({ level: "silent" }),
     printQRInTerminal: true,
-    browser: ["Atlas", "Safari", "1.0.0"],
+    browser: ["Styx", "Safari", "1.0.0"],
     auth: state,
     version,
   });
 
-  store.bind(Atlas.ev);
+  store.bind(Styx.ev);
 
-  Atlas.public = true;
+  Styx.public = true;
 
   async function installPlugin() {
     console.log(chalk.yellow("Checking for Plugins...\n"));
@@ -102,7 +102,7 @@ const startAtlas = async () => {
 
     if (!plugins.length || plugins.length == 0) {
       console.log(
-        chalk.redBright("No Extra Plugins Installed ! Starting Atlas...\n")
+        chalk.redBright("No Extra Plugins Installed ! Starting Styx...\n")
       );
     } else {
       console.log(
@@ -125,7 +125,7 @@ const startAtlas = async () => {
       }
       console.log(
         chalk.greenBright(
-          "All Plugins Installed Successfully ! Starting Atlas...\n"
+          "All Plugins Installed Successfully ! Starting Styx...\n"
         )
       );
     }
@@ -133,47 +133,47 @@ const startAtlas = async () => {
 
   await readcommands();
 
-  Atlas.ev.on("creds.update", saveState);
-  Atlas.serializeM = (m) => smsg(Atlas, m, store);
-  Atlas.ev.on("connection.update", async (update) => {
+  Styx.ev.on("creds.update", saveState);
+  Styx.serializeM = (m) => smsg(Styx, m, store);
+  Styx.ev.on("connection.update", async (update) => {
     const { lastDisconnect, connection, qr } = update;
     if (connection) {
-      console.info(`[ ATLAS ] Server Status => ${connection}`);
+      console.info(`[ Styx ] Server Status => ${connection}`);
     }
 
     if (connection === "close") {
       let reason = new Boom(lastDisconnect?.error)?.output.statusCode;
       if (reason === DisconnectReason.badSession) {
         console.log(
-          `[ ATLAS ] Bad Session File, Please Delete Session and Scan Again.\n`
+          `[ Styx ] Bad Session File, Please Delete Session and Scan Again.\n`
         );
         process.exit();
       } else if (reason === DisconnectReason.connectionClosed) {
-        console.log("[ ATLAS ] Connection closed, reconnecting....\n");
-        startAtlas();
+        console.log("[ Styx ] Connection closed, reconnecting....\n");
+        startStyx();
       } else if (reason === DisconnectReason.connectionLost) {
-        console.log("[ ATLAS ] Connection Lost from Server, reconnecting...\n");
-        startAtlas();
+        console.log("[ Styx ] Connection Lost from Server, reconnecting...\n");
+        startStyx();
       } else if (reason === DisconnectReason.connectionReplaced) {
         console.log(
-          "[ ATLAS ] Connection Replaced, Another New Session Opened, Please Close Current Session First!\n"
+          "[ Styx ] Connection Replaced, Another New Session Opened, Please Close Current Session First!\n"
         );
         process.exit();
       } else if (reason === DisconnectReason.loggedOut) {
         clearState();
         console.log(
-          `[ ATLAS ] Device Logged Out, Please Delete Session and Scan Again.\n`
+          `[ Styx ] Device Logged Out, Please Delete Session and Scan Again.\n`
         );
         process.exit();
       } else if (reason === DisconnectReason.restartRequired) {
-        console.log("[ ATLAS ] Server Restarting...\n");
-        startAtlas();
+        console.log("[ Styx ] Server Restarting...\n");
+        startStyx();
       } else if (reason === DisconnectReason.timedOut) {
-        console.log("[ ATLAS ] Connection Timed Out, Trying to Reconnect...\n");
-        startAtlas();
+        console.log("[ Styx ] Connection Timed Out, Trying to Reconnect...\n");
+        startStyx();
       } else {
         console.log(
-          `[ ATLAS ] Server Disconnected: "It's either safe disconnect or WhatsApp Account got banned !\n"`
+          `[ Styx ] Server Disconnected: "It's either safe disconnect or WhatsApp Account got banned !\n"`
         );
       }
     }
@@ -182,21 +182,21 @@ const startAtlas = async () => {
     }
   });
 
-  Atlas.ev.on("group-participants.update", async (m) => {
-    welcomeLeft(Atlas, m);
+  Styx.ev.on("group-participants.update", async (m) => {
+    welcomeLeft(Styx, m);
   });
 
-  Atlas.ev.on("messages.upsert", async (chatUpdate) => {
-    m = serialize(Atlas, chatUpdate.messages[0]);
+  Styx.ev.on("messages.upsert", async (chatUpdate) => {
+    m = serialize(Styx, chatUpdate.messages[0]);
 
     if (!m.message) return;
     if (m.key && m.key.remoteJid == "status@broadcast") return;
     if (m.key.id.startsWith("BAE5") && m.key.id.length == 16) return;
 
-    require("./Core.js")(Atlas, m, commands, chatUpdate);
+    require("./Core.js")(Styx, m, commands, chatUpdate);
   });
 
-  Atlas.decodeJid = (jid) => {
+  Styx.decodeJid = (jid) => {
     if (!jid) return jid;
     if (/:\d+@/gi.test(jid)) {
       let decode = jidDecode(jid) || {};
@@ -207,9 +207,9 @@ const startAtlas = async () => {
     } else return jid;
   };
 
-  Atlas.ev.on("contacts.update", (update) => {
+  Styx.ev.on("contacts.update", (update) => {
     for (let contact of update) {
-      let id = Atlas.decodeJid(contact.id);
+      let id = Styx.decodeJid(contact.id);
       if (store && store.contacts)
         store.contacts[id] = {
           id,
@@ -218,7 +218,7 @@ const startAtlas = async () => {
     }
   });
 
-  Atlas.downloadAndSaveMediaMessage = async (
+  Styx.downloadAndSaveMediaMessage = async (
     message,
     filename,
     attachExtension = true
@@ -240,7 +240,7 @@ const startAtlas = async () => {
     return trueFileName;
   };
 
-  Atlas.downloadMediaMessage = async (message) => {
+  Styx.downloadMediaMessage = async (message) => {
     let mime = (message.msg || message).mimetype || "";
     let messageType = message.mtype
       ? message.mtype.replace(/Message/gi, "")
@@ -254,14 +254,14 @@ const startAtlas = async () => {
     return buffer;
   };
 
-  Atlas.parseMention = async (text) => {
+  Styx.parseMention = async (text) => {
     return [...text.matchAll(/@([0-9]{5,16}|0)/g)].map(
       (v) => v[1] + "@s.whatsapp.net"
     );
   };
 
-  Atlas.sendText = (jid, text, quoted = "", options) =>
-    Atlas.sendMessage(
+  Styx.sendText = (jid, text, quoted = "", options) =>
+    Styx.sendMessage(
       jid,
       {
         text: text,
@@ -272,7 +272,7 @@ const startAtlas = async () => {
       }
     );
 
-  Atlas.getFile = async (PATH, save) => {
+  Styx.getFile = async (PATH, save) => {
     let res;
     let data = Buffer.isBuffer(PATH)
       ? PATH
@@ -304,8 +304,8 @@ const startAtlas = async () => {
     };
   };
 
-  Atlas.setStatus = (status) => {
-    Atlas.query({
+  Styx.setStatus = (status) => {
+    Styx.query({
       tag: "iq",
       attrs: {
         to: "@s.whatsapp.net",
@@ -323,8 +323,8 @@ const startAtlas = async () => {
     return status;
   };
 
-  Atlas.sendFile = async (jid, PATH, fileName, quoted = {}, options = {}) => {
-    let types = await Atlas.getFile(PATH, true);
+  Styx.sendFile = async (jid, PATH, fileName, quoted = {}, options = {}) => {
+    let types = await Styx.getFile(PATH, true);
     let { filename, size, ext, mime, data } = types;
     let type = "",
       mimetype = mime,
@@ -348,7 +348,7 @@ const startAtlas = async () => {
     else if (/video/.test(mime)) type = "video";
     else if (/audio/.test(mime)) type = "audio";
     else type = "document";
-    await Atlas.sendMessage(
+    await Styx.sendMessage(
       jid,
       {
         [type]: {
@@ -367,7 +367,7 @@ const startAtlas = async () => {
   };
 };
 
-startAtlas();
+startStyx();
 
 app.use("/", express.static(join(__dirname, "Frontend")));
 

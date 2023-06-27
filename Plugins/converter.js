@@ -34,7 +34,7 @@ module.exports = {
   ],
   description: "All converter related commands",
   start: async (
-    Atlas,
+    Styx,
     m,
     { inputCMD, text, quoted, doReact, prefix, mime }
   ) => {
@@ -48,12 +48,12 @@ module.exports = {
           );
         }
         await doReact("🎴");
-        let mediaMess = await Atlas.downloadAndSaveMediaMessage(quoted);
+        let mediaMess = await Styx.downloadAndSaveMediaMessage(quoted);
         let ran = await getRandom(".png");
         exec(`ffmpeg -i ${mediaMess} ${ran}`, (err) => {
           fs.unlinkSync(mediaMess);
           if (err) {
-            Atlas.sendMessage(
+            Styx.sendMessage(
               m.from,
               {
                 text: `Please mention a *Non-animated* sticker to process ! \n\nOr use *${prefix}togif* / *${prefix}tomp4*  to process *Animated* sticker !`,
@@ -63,7 +63,7 @@ module.exports = {
             return;
           }
           let buffer = fs.readFileSync(ran);
-          Atlas.sendMessage(
+          Styx.sendMessage(
             m.from,
             { image: buffer, caption: `_Converted by:_  *${botName}*\n` },
             { quoted: m }
@@ -80,10 +80,10 @@ module.exports = {
           );
         }
         await doReact("🎴");
-        let mediaMess2 = await Atlas.downloadAndSaveMediaMessage(quoted);
+        let mediaMess2 = await Styx.downloadAndSaveMediaMessage(quoted);
         let webpToMp4 = await webp2mp4File(mediaMess2);
 
-        await Atlas.sendMessage(
+        await Styx.sendMessage(
           m.from,
           {
             video: { url: webpToMp4.result },
@@ -102,10 +102,10 @@ module.exports = {
           );
         }
         await doReact("🎴");
-        let mediaMess3 = await Atlas.downloadAndSaveMediaMessage(quoted);
+        let mediaMess3 = await Styx.downloadAndSaveMediaMessage(quoted);
         let webpToMp42 = await webp2mp4File(mediaMess3);
 
-        await Atlas.sendMessage(
+        await Styx.sendMessage(
           m.from,
           {
             video: { url: webpToMp42.result },
@@ -139,9 +139,9 @@ module.exports = {
         }
         await doReact("🎶");
         let media = await quoted.download();
-        await Atlas.sendPresenceUpdate("recording", m.from);
+        await Styx.sendPresenceUpdate("recording", m.from);
         let audio = await toAudio(media, "mp4");
-        Atlas.sendMessage(
+        Styx.sendMessage(
           m.from,
           {
             document: audio,
@@ -174,9 +174,9 @@ module.exports = {
         }
         await doReact("🎶");
         let media2 = await quoted.download();
-        await Atlas.sendPresenceUpdate("recording", m.from);
+        await Styx.sendPresenceUpdate("recording", m.from);
         let audio2 = await toAudio(media2, "mp4");
-        Atlas.sendMessage(
+        Styx.sendMessage(
           m.from,
           { audio: audio2, mimetype: "audio/mpeg" },
           { quoted: m }
@@ -190,7 +190,7 @@ module.exports = {
             `Plese provide an *Image* / *Video* to generate a link! With Caption ${prefix}tourl`
           );
         }
-        let media5 = await Atlas.downloadAndSaveMediaMessage(quoted);
+        let media5 = await Styx.downloadAndSaveMediaMessage(quoted);
         if (/image/.test(mime)) {
           await doReact("🔗");
           let anu = await GraphOrg(media5);
@@ -203,7 +203,7 @@ module.exports = {
           } catch (e) {
             await doReact("❌");
             await fs.unlinkSync(media5);
-            return Atlas.sendMessage(
+            return Styx.sendMessage(
               m.from,
               {
                 text: `*Your video size is too big!*\n\n*Max video size:* 5MB`,
@@ -224,7 +224,7 @@ module.exports = {
       case "imgtopdf":
         if (/image/.test(mime)) {
           await doReact("📑");
-          let mediaMess4 = await Atlas.downloadAndSaveMediaMessage(quoted);
+          let mediaMess4 = await Styx.downloadAndSaveMediaMessage(quoted);
 
           async function generatePDF(path) {
             return new Promise((resolve, reject) => {
@@ -258,7 +258,7 @@ module.exports = {
             setTimeout(async () => {
               let pdf = fs.readFileSync(pdfPATH);
 
-              Atlas.sendMessage(
+              Styx.sendMessage(
                 m.from,
                 {
                   document: pdf,
