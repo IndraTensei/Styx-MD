@@ -1,7 +1,4 @@
-<p align="center">
-<a href="https://github.com/FantoX001/Styx-MD">
-    <img src="https://i.imgur.com/MClOeqe.jpeg">
-  </a>
+
 
 <h1 align="center"> Styx MD
 </h1>
