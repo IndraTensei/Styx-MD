@@ -288,11 +288,7 @@ module.exports = {
             { quoted: m }
           );
         } catch (err) {
-          Styx.sendMessage(
-            m.from,
-            { text: `${mess.botadmin}` },
-            { quoted: m }
-          );
+          Styx.sendMessage(m.from, { text: `${mess.botadmin}` }, { quoted: m });
         }
         break;
 
@@ -370,7 +366,7 @@ module.exports = {
 
       case "hidetag":
       case "htag":
-        if (!isAdmin) {
+        if (!isAdmin || !isCreator) {
           await doReact("❌");
           return m.reply(`*You* must be *Admin* in order to use this Command!`);
         }
